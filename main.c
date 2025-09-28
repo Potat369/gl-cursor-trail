@@ -123,10 +123,10 @@ unsigned int createShaderFromFile(GLenum type, char* name) {
 
   fseek(shaderFile, 0, SEEK_END);
   long size = ftell(shaderFile) + 1;
-  fseek(shaderFile, 0, SEEK_SET);
+  rewind(shaderFile);
 
   char buffer[size]; 
-  buffer[size - 1] = EOF;
+  buffer[size - 1] = '\0';
 
   unsigned int chN = 0;
   char ch;
@@ -135,7 +135,7 @@ unsigned int createShaderFromFile(GLenum type, char* name) {
     chN++;
   }
 
-  const char* constBuffer = &(*buffer);
+  const char* constBuffer = buffer;
   glShaderSource(shader, 1, &constBuffer, NULL);
   glCompileShader(shader);
 
@@ -146,7 +146,6 @@ unsigned int createShaderFromFile(GLenum type, char* name) {
     glGetShaderInfoLog(shader, sizeof(infoLog), NULL, infoLog);
     printf("Failed to compile \"%s\", error:\n%s", name, infoLog);
   }
-
 
   fclose(shaderFile);
   return shader;
