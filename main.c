@@ -68,6 +68,9 @@ int main(void) {
   glBindBuffer(GL_ARRAY_BUFFER, 0);
   glBindVertexArray(0);
 
+  if (glfwRawMouseMotionSupported())
+    glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+
   // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
   int valid = 0;
@@ -114,7 +117,7 @@ void frameBufferSizeCallback(GLFWwindow* window, int width, int height) {
 unsigned int createShaderFromFile(GLenum type, char* name) {
   unsigned int shader = glCreateShader(type);
 
-  FILE* shaderFile = fopen(name, "r");
+  FILE* shaderFile = fopen(name, "rb");
 
   if (shaderFile == NULL) {
     printf("Shader \"%s\" doesn't exist!", name);
