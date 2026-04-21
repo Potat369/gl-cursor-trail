@@ -161,7 +161,6 @@ unsigned int createShaderProgram(int shaderCount, ...) {
 
   for (int i = 0; i < shaderCount; i++) {
     glAttachShader(program, va_arg(valist, unsigned int));
-
   }
 
   glLinkProgram(program);
